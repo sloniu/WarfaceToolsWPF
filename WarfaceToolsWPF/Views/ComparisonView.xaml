@@ -1,0 +1,296 @@
+﻿<UserControl x:Class="WarfaceToolsWPF.Views.ComparisonView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WarfaceToolsWPF.Views"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:viewModels="clr-namespace:WarfaceToolsWPF.ViewModels"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=viewModels:ComparisonViewModel,  IsDesignTimeCreatable=True}"
+             xmlns:y="clr-namespace:WarfaceToolsWPF.Views"
+             cal:Bind.AtDesignTime="True" HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
+             HorizontalAlignment="Center">
+
+    <UserControl.Resources>
+        <!-- ukryj combobx gdy pusty -->
+        <Style TargetType="{x:Type ComboBox}">
+            <Style.Triggers>
+                <Trigger Property="HasItems" Value="False">
+                    <Setter Property="IsEnabled" Value="False" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+        <!-- template informacji o broniach -->
+        <DataTemplate x:Key="WeaponStatsInfo">
+            <StackPanel Grid.Row="4" Grid.Column="0" Margin="5,0" VerticalAlignment="Bottom">
+                <TextBlock Text="Damage" HorizontalAlignment="Right" Margin="1" />
+                <TextBlock Text="Range" HorizontalAlignment="Right" Margin="1" />
+                <TextBlock Text="RateOfFire" HorizontalAlignment="Right" Margin="1" />
+                <TextBlock Text="AimAccuracy" HorizontalAlignment="Right" Margin="1" />
+                <TextBlock Text="HipAccuracy" HorizontalAlignment="Right" Margin="1" />
+                <TextBlock Text="AmmoCapacity" HorizontalAlignment="Right" Margin="1" />
+                <TextBlock Text="Allowed for ESL" HorizontalAlignment="Right" Margin="1" />
+                <TextBlock Text="Allowed for Cup" HorizontalAlignment="Right" Margin="1" />
+            </StackPanel>
+        </DataTemplate>
+        <!-- template informacji o ekwipunku -->
+        <DataTemplate x:Key="EquipmentStatsInfo">
+            <StackPanel Grid.Row="4" Grid.Column="0" Margin="5,0" VerticalAlignment="Bottom">
+                <TextBlock Text="Perk 1" HorizontalAlignment="Right" Margin="1" />
+                <TextBlock Text="Perk 2" HorizontalAlignment="Right" Margin="1" />
+                <TextBlock Text="Perk 3" HorizontalAlignment="Right" Margin="1" />
+                <TextBlock Text="Perk 4" HorizontalAlignment="Right" Margin="1" />
+                <TextBlock Text="Allowed for ESL" HorizontalAlignment="Right" Margin="1" />
+                <TextBlock Text="Allowed for Cup" HorizontalAlignment="Right" Margin="1" />
+            </StackPanel>
+        </DataTemplate>
+        <!-- template statystyk wybranej broni (po lewej) -->
+        <DataTemplate x:Key="WeaponStats1">
+            <StackPanel Grid.Column="1" Margin="5,0">
+                <TextBlock 
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem1.Damage}"
+                    HorizontalAlignment="Right" Margin="1">
+                </TextBlock>
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem1.Range}"
+                    HorizontalAlignment="Right" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem1.RateOfFire}"
+                    HorizontalAlignment="Right" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem1.AimAccuracy}"
+                    HorizontalAlignment="Right" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem1.HipAccuracy}"
+                    HorizontalAlignment="Right" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem1.AmmunitionCapacity}"
+                    HorizontalAlignment="Right" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem1.IsEsl}"
+                    HorizontalAlignment="Right" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem1.IsCup}"
+                    HorizontalAlignment="Right" Margin="1" />
+            </StackPanel>
+        </DataTemplate>
+        <!-- template wybranej broni (po prawej) -->
+        <DataTemplate x:Key="WeaponStats2">
+            <StackPanel Grid.Row="4" Grid.Column="2" Margin="5,0">
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem2.Damage}"
+                    HorizontalAlignment="Left" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem2.Range}"
+                    HorizontalAlignment="Left" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem2.RateOfFire}"
+                    HorizontalAlignment="Left" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem2.AimAccuracy}"
+                    HorizontalAlignment="Left" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem2.HipAccuracy}"
+                    HorizontalAlignment="Left" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem2.AmmunitionCapacity}"
+                    HorizontalAlignment="Left" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem2.IsEsl}"
+                    HorizontalAlignment="Left" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem2.IsCup}"
+                    HorizontalAlignment="Left" Margin="1" />
+            </StackPanel>
+        </DataTemplate>
+        <!-- template wybranego ekwipunku (po lewej) -->
+        <DataTemplate x:Key="EquipmentStats1">
+            <StackPanel Grid.Row="4" Grid.Column="1" Margin="5,0" VerticalAlignment="Bottom">
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem1.Perk1}"
+                    HorizontalAlignment="Right" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem1.Perk2}"
+                    HorizontalAlignment="Right" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem1.Perk3}"
+                    HorizontalAlignment="Right" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem1.Perk4}"
+                    HorizontalAlignment="Right" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem1.IsEsl}"
+                    HorizontalAlignment="Right" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem1.IsCup}"
+                    HorizontalAlignment="Right" Margin="1" />
+            </StackPanel>
+        </DataTemplate>
+        <!-- template wybranego ekwipunku (po prawej) -->
+        <DataTemplate x:Key="EquipmentStats2">
+            <StackPanel Grid.Row="4" Grid.Column="2" Margin="5,0">
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem2.Perk1}"
+                    HorizontalAlignment="Left" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem2.Perk2}"
+                    HorizontalAlignment="Left" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem2.Perk3}"
+                    HorizontalAlignment="Left" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem2.Perk4}"
+                    HorizontalAlignment="Left" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem2.IsEsl}"
+                    HorizontalAlignment="Left" Margin="1" />
+                <TextBlock
+                    Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid}, Path=DataContext.SelectedItem2.IsCup}"
+                    HorizontalAlignment="Left" Margin="1" />
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid Margin="5,0,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <!-- row 0 - types -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <RadioButton x:Name="RadioButtonWeapons" Grid.Row="0" Grid.Column="0" Content="Weapons" Margin="1"
+                             IsChecked="{Binding IsWeaponSelected, Mode=TwoWay}" />
+            <RadioButton x:Name="RadioButtonEquipment" Grid.Row="0" Grid.Column="1" Content="Equipment" Margin="1" />
+
+        </Grid>
+        <!-- row 1 - classes -->
+        <ComboBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="1"
+                  ItemsSource="{Binding Classes}"
+                  DisplayMemberPath="Item1"
+                  SelectedValuePath="Item2"
+                  SelectedItem="{Binding SelectedClass1}">
+        </ComboBox>
+        <ComboBox Grid.Row="1" Grid.Column="2" Margin="1"
+                  ItemsSource="{Binding Classes}"
+                  DisplayMemberPath="Item1"
+                  SelectedValuePath="Item2"
+                  SelectedItem="{Binding SelectedClass2}">
+        </ComboBox>
+        <!-- row 1 - select item -->
+        <ComboBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Top"
+                  MinWidth="100" Margin="1"
+                  ItemsSource="{Binding ItemDataTable1}"
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="Name"
+                  SelectedItem="{Binding SelectedItem1, Mode=TwoWay}"
+                  IsEditable="True"
+                  IsTextSearchEnabled="True" />
+        <ComboBox Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="100"
+                  Margin="1"
+                  ItemsSource="{Binding ItemDataTable2}"
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="Name"
+                  SelectedItem="{Binding SelectedItem2, Mode=TwoWay}"
+                  IsEditable="True"
+                  IsTextSearchEnabled="True" />
+        <Image Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Source="{Binding SelectedItem1.Picture}"
+               HorizontalAlignment="Right" Width="200" Height="80" Margin="1" />
+        <Image Grid.Row="3" Grid.Column="2" Source="{Binding SelectedItem2.Picture}" HorizontalAlignment="Left"
+               Width="200" Height="80" Margin="1" />
+        <!-- row 2 - view stats info -->
+        <!-- template informacji z triggerem -->
+        <ContentPresenter Grid.Row="4" Grid.Column="0" Margin="5,0" VerticalAlignment="Bottom">
+            <ContentPresenter.ContentTemplate>
+                <DataTemplate DataType="{x:Type StackPanel}">
+                    <ContentControl>
+                        <ContentControl.Style>
+                            <Style TargetType="{x:Type ContentControl}">
+                                <Setter Property="ContentTemplate" Value="{StaticResource WeaponStatsInfo}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsChecked, ElementName=RadioButtonWeapons}"
+                                                 Value="True">
+                                        <Setter Property="ContentTemplate" Value="{StaticResource WeaponStatsInfo}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsChecked, ElementName=RadioButtonEquipment}"
+                                                 Value="True">
+                                        <Setter Property="ContentTemplate" Value="{StaticResource EquipmentStatsInfo}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ContentControl.Style>
+                    </ContentControl>
+                </DataTemplate>
+            </ContentPresenter.ContentTemplate>
+        </ContentPresenter>
+        <!-- row 2 - view stats -->
+        <!-- template statystyk z triggerem -->
+        <ContentPresenter Grid.Row="4" Grid.Column="1" Margin="5,0">
+            <ContentPresenter.ContentTemplate>
+                <DataTemplate DataType="{x:Type StackPanel}">
+                    <ContentControl>
+                        <ContentControl.Style>
+                            <Style TargetType="{x:Type ContentControl}">
+                                <Setter Property="ContentTemplate" Value="{StaticResource WeaponStats1}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsChecked, ElementName=RadioButtonWeapons}"
+                                                 Value="True">
+                                        <Setter Property="ContentTemplate" Value="{StaticResource WeaponStats1}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsChecked, ElementName=RadioButtonEquipment}"
+                                                 Value="True">
+                                        <Setter Property="ContentTemplate" Value="{StaticResource EquipmentStats1}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ContentControl.Style>
+                    </ContentControl>
+                </DataTemplate>
+            </ContentPresenter.ContentTemplate>
+        </ContentPresenter>
+
+        <ContentPresenter Grid.Row="4" Grid.Column="2" Margin="5,0">
+            <ContentPresenter.ContentTemplate>
+                <DataTemplate DataType="{x:Type StackPanel}">
+                    <ContentControl>
+                        <ContentControl.Style>
+                            <Style TargetType="{x:Type ContentControl}">
+                                <Setter Property="ContentTemplate" Value="{StaticResource WeaponStats2}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsChecked, ElementName=RadioButtonWeapons}"
+                                                 Value="True">
+                                        <Setter Property="ContentTemplate" Value="{StaticResource WeaponStats2}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsChecked, ElementName=RadioButtonEquipment}"
+                                                 Value="True">
+                                        <Setter Property="ContentTemplate" Value="{StaticResource EquipmentStats2}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ContentControl.Style>
+                    </ContentControl>
+                </DataTemplate>
+            </ContentPresenter.ContentTemplate>
+        </ContentPresenter>
+    </Grid>
+</UserControl>
+
+
+

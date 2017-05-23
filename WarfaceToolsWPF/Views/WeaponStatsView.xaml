@@ -1,0 +1,477 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
+    xmlns:viewModels="clr-namespace:WarfaceToolsWPF.ViewModels"
+    x:Class="WarfaceToolsWPF.Views.WeaponStatsView"
+            
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance Type=viewModels:WeaponStatsViewModel,  IsDesignTimeCreatable=True}"
+
+    cal:Bind.AtDesignTime="True" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+
+    <!-- style -->
+    <UserControl.Resources>
+        <Style TargetType="{x:Type DataGrid}">
+            <Style.Triggers>
+                <Trigger Property="HasItems" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type DataGridCell}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="Background" Value="{x:Null}" />
+                    <Setter Property="BorderBrush" Value="{x:Null}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type DataGridRow}">
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="Background" Value="{x:Null}" />
+                    <Setter Property="BorderBrush" Value="{x:Null}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+    </UserControl.Resources>
+    
+    <StackPanel Orientation="Horizontal" Margin="1">
+        <StackPanel Grid.Column="0" Margin="5,0">
+            <Button x:Name="ButtonRiflemanWeapons" Height="70" Width="70">
+                <Button.ToolTip>
+                    <ToolTip>
+                        <TextBlock>Rifleman weapons</TextBlock>
+                    </ToolTip>
+                </Button.ToolTip>
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Image Source="/WarfaceToolsWPF;component/Resources/classicons/Icon_Rifleman.png"></Image>
+                </StackPanel>
+            </Button>
+            <Button x:Name="ButtonEngineerWeapons" Height="70" Width="70">
+                <Button.ToolTip>
+                    <ToolTip>
+                        <TextBlock>Engineer weapons</TextBlock>
+                    </ToolTip>
+                </Button.ToolTip>
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Image Source="/WarfaceToolsWPF;component/Resources/classicons/Icon_Engineer.png"></Image>
+                </StackPanel>
+            </Button>
+            <Button x:Name="ButtonMedicWeapons" Height="70" Width="70">
+                <Button.ToolTip>
+                    <ToolTip>
+                        <TextBlock>Medic weapons</TextBlock>
+                    </ToolTip>
+                </Button.ToolTip>
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Image Source="/WarfaceToolsWPF;component/Resources/classicons/Icon_Medic.png"></Image>
+                </StackPanel>
+            </Button>
+            <Button x:Name="ButtonSniperWeapons" Height="70" Width="70">
+                <Button.ToolTip>
+                    <ToolTip>
+                        <TextBlock>Sniper weapons</TextBlock>
+                    </ToolTip>
+                </Button.ToolTip>
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Image Source="/WarfaceToolsWPF;component/Resources/classicons/Icon_Sniper.png"></Image>
+                </StackPanel>
+            </Button>
+            <Button x:Name="ButtonPistols" Height="70" Width="70">
+                <Button.ToolTip>
+                    <ToolTip>
+                        <TextBlock>Pistols</TextBlock>
+                    </ToolTip>
+                </Button.ToolTip>
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Image Source="/WarfaceToolsWPF;component/Resources/classicons/Challenge_mark_44.png"></Image>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1">
+            <TextBlock>Click a button to select weapon type.</TextBlock>
+            <DataGrid
+                x:Name="DataGridWeapons"
+                VerticalAlignment="Top"
+                IsReadOnly="True"
+                ItemsSource="{Binding WeaponDataTable}"
+                AutoGenerateColumns="False"
+                Width="956"
+                Height="500"
+                VerticalScrollBarVisibility="Auto"
+                CanUserResizeColumns="False"
+                CanUserResizeRows="False"
+                HeadersVisibility="Column"
+                GridLinesVisibility="None">
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Header="Nazwa" Binding="{Binding Name}" Width="100">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="ToolTip" Value="Name"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn.HeaderTemplate>
+
+                            <DataTemplate>
+                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/damage.png" Height="30" Width="30"/>
+                            </DataTemplate>
+                        </DataGridTextColumn.HeaderTemplate>
+                    </DataGridTextColumn>
+                    <DataGridTemplateColumn CanUserSort="False" >
+                        <DataGridTemplateColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="ToolTip" Value="Weapon image"/>
+                            </Style>
+                        </DataGridTemplateColumn.HeaderStyle>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding Picture}" Width="200" Height="75"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/damage.png" Height="30" Width="30"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Damage" Binding="{Binding Damage}" Width="*">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="ToolTip" Value="Damage"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/damage.png" Height="30" Width="30"/>
+                            </DataTemplate>
+                        </DataGridTextColumn.HeaderTemplate>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Range" Binding="{Binding Range}" Width="*">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="ToolTip" Value="Weapon range"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/range.png" Height="30" Width="30"/>
+                            </DataTemplate>
+                        </DataGridTextColumn.HeaderTemplate>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Fire rate" Binding="{Binding RateOfFire}" Width="*">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="ToolTip" Value="Rate of fire"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/fireRate.png" Height="30" Width="30"/>
+                            </DataTemplate>
+                        </DataGridTextColumn.HeaderTemplate>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Aim accuracy" Binding="{Binding AimAccuracy}" Width="*">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="ToolTip" Value="Aim accuracy"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/damage.png" Height="30" Width="30"/>
+                            </DataTemplate>
+                        </DataGridTextColumn.HeaderTemplate>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Hip accuracy" Binding="{Binding HipAccuracy}" Width="*">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="ToolTip" Value="Hip accuracy"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/damage.png" Height="30" Width="30"/>
+                            </DataTemplate>
+                        </DataGridTextColumn.HeaderTemplate>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Ammo" Binding="{Binding AmmunitionCapacity}" Width="*">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="ToolTip" Value="Ammunition capacity"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/damage.png" Height="30" Width="30"/>
+                            </DataTemplate>
+                        </DataGridTextColumn.HeaderTemplate>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Obtain" Binding="{Binding Obtainment}" Width="*">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="ToolTip" Value="Weapon source"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/damage.png" Height="30" Width="30"/>
+                            </DataTemplate>
+                        </DataGridTextColumn.HeaderTemplate>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Price" Binding="{Binding Cost}" Width="*">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="ToolTip" Value="Price"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/damage.png" Height="30" Width="30"/>
+                            </DataTemplate>
+                        </DataGridTextColumn.HeaderTemplate>
+                    </DataGridTextColumn>
+                    <DataGridCheckBoxColumn Header="IsVendor" Binding="{Binding IsEsl}" Width="*">
+                        <DataGridCheckBoxColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="ToolTip" Value="LCS weapon"/>
+                            </Style>
+                        </DataGridCheckBoxColumn.HeaderStyle>
+                        <DataGridCheckBoxColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/damage.png" Height="30" Width="30"/>
+                            </DataTemplate>
+                        </DataGridCheckBoxColumn.HeaderTemplate>
+                    </DataGridCheckBoxColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </StackPanel>
+<!--    <Grid VerticalAlignment="Top">-->
+<!--        <Grid.ColumnDefinitions>-->
+<!--            <ColumnDefinition Width="*"/>-->
+<!--            <ColumnDefinition Width="Auto"/>-->
+<!--        </Grid.ColumnDefinitions>-->
+<!--        <StackPanel Grid.Column="0" Margin="5,0">-->
+<!--            <Button x:Name="ButtonRiflemanWeapons" Height="70" Width="70">-->
+<!--                <Button.ToolTip>-->
+<!--                    <ToolTip>-->
+<!--                        <TextBlock>Rifleman weapons</TextBlock>-->
+<!--                    </ToolTip>-->
+<!--                </Button.ToolTip>-->
+<!--                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">-->
+<!--                    <Image Source="/WarfaceToolsWPF;component/Resources/classicons/Icon_Rifleman.png"></Image>-->
+<!--                </StackPanel>-->
+<!--            </Button>-->
+<!--            <Button x:Name="ButtonEngineerWeapons" Height="70" Width="70">-->
+<!--                <Button.ToolTip>-->
+<!--                    <ToolTip>-->
+<!--                        <TextBlock>Engineer weapons</TextBlock>-->
+<!--                    </ToolTip>-->
+<!--                </Button.ToolTip>-->
+<!--                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">-->
+<!--                    <Image Source="/WarfaceToolsWPF;component/Resources/classicons/Icon_Engineer.png"></Image>-->
+<!--                </StackPanel>-->
+<!--            </Button>-->
+<!--            <Button x:Name="ButtonMedicWeapons" Height="70" Width="70">-->
+<!--                <Button.ToolTip>-->
+<!--                    <ToolTip>-->
+<!--                        <TextBlock>Medic weapons</TextBlock>-->
+<!--                    </ToolTip>-->
+<!--                </Button.ToolTip>-->
+<!--                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">-->
+<!--                    <Image Source="/WarfaceToolsWPF;component/Resources/classicons/Icon_Medic.png"></Image>-->
+<!--                </StackPanel>-->
+<!--            </Button>-->
+<!--            <Button x:Name="ButtonSniperWeapons" Height="70" Width="70">-->
+<!--                <Button.ToolTip>-->
+<!--                    <ToolTip>-->
+<!--                        <TextBlock>Sniper weapons</TextBlock>-->
+<!--                    </ToolTip>-->
+<!--                </Button.ToolTip>-->
+<!--                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">-->
+<!--                    <Image Source="/WarfaceToolsWPF;component/Resources/classicons/Icon_Sniper.png"></Image>-->
+<!--                </StackPanel>-->
+<!--            </Button>-->
+<!--            <Button x:Name="ButtonPistols" Height="70" Width="70">-->
+<!--                <Button.ToolTip>-->
+<!--                    <ToolTip>-->
+<!--                        <TextBlock>Pistols</TextBlock>-->
+<!--                    </ToolTip>-->
+<!--                </Button.ToolTip>-->
+<!--                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">-->
+<!--                    <Image Source="/WarfaceToolsWPF;component/Resources/classicons/Challenge_mark_44.png"></Image>-->
+<!--                </StackPanel>-->
+<!--            </Button>-->
+<!--        </StackPanel>-->
+<!---->
+<!--        <StackPanel Grid.Column="1">-->
+<!--            <TextBlock>Click a button to select weapon type.</TextBlock>-->
+<!--            <DataGrid-->
+<!--                x:Name="DataGridWeapons"-->
+<!--                VerticalAlignment="Top"-->
+<!--                IsReadOnly="True"-->
+<!--                ItemsSource="{Binding WeaponDataTable}"-->
+<!--                AutoGenerateColumns="False"-->
+<!--                Width="956"-->
+<!--                Height="500"-->
+<!--                VerticalScrollBarVisibility="Auto"-->
+<!--                CanUserResizeColumns="False"-->
+<!--                CanUserResizeRows="False"-->
+<!--                HeadersVisibility="Column"-->
+<!--                GridLinesVisibility="None">-->
+<!--                <DataGrid.Columns>-->
+<!--                    -->
+<!--                    <DataGridTextColumn Header="Nazwa" Binding="{Binding Name}" Width="100">-->
+<!--                        <DataGridTextColumn.HeaderStyle>-->
+<!--                            <Style TargetType="DataGridColumnHeader">-->
+<!--                                <Setter Property="ToolTip" Value="Name"/>-->
+<!--                            </Style>-->
+<!--                        </DataGridTextColumn.HeaderStyle>-->
+<!--                        <DataGridTextColumn.HeaderTemplate>-->
+<!--                            -->
+<!--                            <DataTemplate>-->
+<!--                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/damage.png" Height="30" Width="30"/>-->
+<!--                            </DataTemplate>-->
+<!--                        </DataGridTextColumn.HeaderTemplate>-->
+<!--                    </DataGridTextColumn>-->
+<!--                    <DataGridTemplateColumn CanUserSort="False" >-->
+<!--                        <DataGridTemplateColumn.HeaderStyle>-->
+<!--                            <Style TargetType="DataGridColumnHeader">-->
+<!--                                <Setter Property="ToolTip" Value="Weapon image"/>-->
+<!--                            </Style>-->
+<!--                        </DataGridTemplateColumn.HeaderStyle>-->
+<!--                        <DataGridTemplateColumn.CellTemplate>-->
+<!--                            <DataTemplate>-->
+<!--                                <Image Source="{Binding Picture}" Width="200" Height="75"/>-->
+<!--                            </DataTemplate>-->
+<!--                        </DataGridTemplateColumn.CellTemplate>-->
+<!--                        <DataGridTemplateColumn.HeaderTemplate>-->
+<!--                            <DataTemplate>-->
+<!--                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/damage.png" Height="30" Width="30"/>-->
+<!--                            </DataTemplate>-->
+<!--                        </DataGridTemplateColumn.HeaderTemplate>-->
+<!--                    </DataGridTemplateColumn>-->
+<!--                    <DataGridTextColumn Header="Damage" Binding="{Binding Damage}" Width="*">-->
+<!--                        <DataGridTextColumn.HeaderStyle>-->
+<!--                            <Style TargetType="DataGridColumnHeader">-->
+<!--                                <Setter Property="ToolTip" Value="Damage"/>-->
+<!--                            </Style>-->
+<!--                        </DataGridTextColumn.HeaderStyle>-->
+<!--                        <DataGridTextColumn.HeaderTemplate>-->
+<!--                            <DataTemplate>-->
+<!--                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/damage.png" Height="30" Width="30"/>-->
+<!--                            </DataTemplate>-->
+<!--                        </DataGridTextColumn.HeaderTemplate>-->
+<!--                    </DataGridTextColumn>-->
+<!--                    <DataGridTextColumn Header="Range" Binding="{Binding Range}" Width="*">-->
+<!--                        <DataGridTextColumn.HeaderStyle>-->
+<!--                            <Style TargetType="DataGridColumnHeader">-->
+<!--                                <Setter Property="ToolTip" Value="Weapon range"/>-->
+<!--                            </Style>-->
+<!--                        </DataGridTextColumn.HeaderStyle>-->
+<!--                        <DataGridTextColumn.HeaderTemplate>-->
+<!--                            <DataTemplate>-->
+<!--                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/range.png" Height="30" Width="30"/>-->
+<!--                            </DataTemplate>-->
+<!--                        </DataGridTextColumn.HeaderTemplate>-->
+<!--                    </DataGridTextColumn>-->
+<!--                    <DataGridTextColumn Header="Fire rate" Binding="{Binding RateOfFire}" Width="*">-->
+<!--                        <DataGridTextColumn.HeaderStyle>-->
+<!--                            <Style TargetType="DataGridColumnHeader">-->
+<!--                                <Setter Property="ToolTip" Value="Rate of fire"/>-->
+<!--                            </Style>-->
+<!--                        </DataGridTextColumn.HeaderStyle>-->
+<!--                        <DataGridTextColumn.HeaderTemplate>-->
+<!--                            <DataTemplate>-->
+<!--                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/fireRate.png" Height="30" Width="30"/>-->
+<!--                            </DataTemplate>-->
+<!--                        </DataGridTextColumn.HeaderTemplate>-->
+<!--                    </DataGridTextColumn>-->
+<!--                    <DataGridTextColumn Header="Aim accuracy" Binding="{Binding AimAccuracy}" Width="*">-->
+<!--                        <DataGridTextColumn.HeaderStyle>-->
+<!--                            <Style TargetType="DataGridColumnHeader">-->
+<!--                                <Setter Property="ToolTip" Value="Aim accuracy"/>-->
+<!--                            </Style>-->
+<!--                        </DataGridTextColumn.HeaderStyle>-->
+<!--                        <DataGridTextColumn.HeaderTemplate>-->
+<!--                            <DataTemplate>-->
+<!--                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/damage.png" Height="30" Width="30"/>-->
+<!--                            </DataTemplate>-->
+<!--                        </DataGridTextColumn.HeaderTemplate>-->
+<!--                    </DataGridTextColumn>-->
+<!--                    <DataGridTextColumn Header="Hip accuracy" Binding="{Binding HipAccuracy}" Width="*">-->
+<!--                        <DataGridTextColumn.HeaderStyle>-->
+<!--                            <Style TargetType="DataGridColumnHeader">-->
+<!--                                <Setter Property="ToolTip" Value="Hip accuracy"/>-->
+<!--                            </Style>-->
+<!--                        </DataGridTextColumn.HeaderStyle>-->
+<!--                        <DataGridTextColumn.HeaderTemplate>-->
+<!--                            <DataTemplate>-->
+<!--                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/damage.png" Height="30" Width="30"/>-->
+<!--                            </DataTemplate>-->
+<!--                        </DataGridTextColumn.HeaderTemplate>-->
+<!--                    </DataGridTextColumn>-->
+<!--                    <DataGridTextColumn Header="Ammo" Binding="{Binding AmmunitionCapacity}" Width="*">-->
+<!--                        <DataGridTextColumn.HeaderStyle>-->
+<!--                            <Style TargetType="DataGridColumnHeader">-->
+<!--                                <Setter Property="ToolTip" Value="Ammunition capacity"/>-->
+<!--                            </Style>-->
+<!--                        </DataGridTextColumn.HeaderStyle>-->
+<!--                        <DataGridTextColumn.HeaderTemplate>-->
+<!--                            <DataTemplate>-->
+<!--                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/damage.png" Height="30" Width="30"/>-->
+<!--                            </DataTemplate>-->
+<!--                        </DataGridTextColumn.HeaderTemplate>-->
+<!--                    </DataGridTextColumn>-->
+<!--                    <DataGridTextColumn Header="Obtain" Binding="{Binding Obtainment}" Width="*">-->
+<!--                        <DataGridTextColumn.HeaderStyle>-->
+<!--                            <Style TargetType="DataGridColumnHeader">-->
+<!--                                <Setter Property="ToolTip" Value="Weapon source"/>-->
+<!--                            </Style>-->
+<!--                        </DataGridTextColumn.HeaderStyle>-->
+<!--                        <DataGridTextColumn.HeaderTemplate>-->
+<!--                            <DataTemplate>-->
+<!--                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/damage.png" Height="30" Width="30"/>-->
+<!--                            </DataTemplate>-->
+<!--                        </DataGridTextColumn.HeaderTemplate>-->
+<!--                    </DataGridTextColumn>-->
+<!--                    <DataGridTextColumn Header="Price" Binding="{Binding Cost}" Width="*">-->
+<!--                        <DataGridTextColumn.HeaderStyle>-->
+<!--                            <Style TargetType="DataGridColumnHeader">-->
+<!--                                <Setter Property="ToolTip" Value="Price"/>-->
+<!--                            </Style>-->
+<!--                        </DataGridTextColumn.HeaderStyle>-->
+<!--                        <DataGridTextColumn.HeaderTemplate>-->
+<!--                            <DataTemplate>-->
+<!--                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/damage.png" Height="30" Width="30"/>-->
+<!--                            </DataTemplate>-->
+<!--                        </DataGridTextColumn.HeaderTemplate>-->
+<!--                    </DataGridTextColumn>-->
+<!--                    <DataGridCheckBoxColumn Header="IsVendor" Binding="{Binding IsEsl}" Width="*">-->
+<!--                        <DataGridCheckBoxColumn.HeaderStyle>-->
+<!--                            <Style TargetType="DataGridColumnHeader">-->
+<!--                                <Setter Property="ToolTip" Value="LCS weapon"/>-->
+<!--                            </Style>-->
+<!--                        </DataGridCheckBoxColumn.HeaderStyle>-->
+<!--                        <DataGridCheckBoxColumn.HeaderTemplate>-->
+<!--                            <DataTemplate>-->
+<!--                                <Image Source="/WarfaceToolsWPF;component/Resources/tableHeaderIcons/damage.png" Height="30" Width="30"/>-->
+<!--                            </DataTemplate>-->
+<!--                        </DataGridCheckBoxColumn.HeaderTemplate>-->
+<!--                    </DataGridCheckBoxColumn>-->
+<!--                </DataGrid.Columns>-->
+<!--            </DataGrid>-->
+<!--        </StackPanel>-->
+<!--    </Grid>-->
+</UserControl>

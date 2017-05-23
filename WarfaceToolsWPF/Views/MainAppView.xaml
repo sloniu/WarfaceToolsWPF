@@ -1,0 +1,28 @@
+﻿<Window x:Class="WarfaceToolsWPF.Views.MainAppView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainAppView" Width="1180" Height="600">
+    <Window.Resources>
+        
+    </Window.Resources>
+    
+    
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <StackPanel Orientation="Horizontal" Margin="10,20,10,10">
+            <StackPanel HorizontalAlignment="Left">
+                <Button x:Name="DisplayMainScreenViewModel" Content="Main" Height="30" Margin="1"/>
+                <Button x:Name="DisplayWeaponStatsViewModel" Content="Weapons" Height="30" Margin="1"/>
+                <Button x:Name="DisplayEquipmentStatsViewModel" Content="Equipment" Height="30" Margin="1"/>
+                <Button x:Name="DisplayComparisonViewModel" Content="Comparison" Height="30" Margin="1"/>
+                <Button x:Name="DisplayCalculatorViewModel" Content="Calculator" Height="30" Margin="1"/>
+                <Button x:Name="DisplayCostCalculatorViewModel" Content="Cost Calculator" Height="30" Margin="1"/>
+                <Button x:Name="ButtonLogout" Content="Logout" Height="30" Margin="1"/>
+                <Button x:Name="ButtonExit" Content="Exit" Height="30" Margin="1"/>
+            </StackPanel>
+            <ContentControl x:Name="ActiveItem" Width="1050"/>
+        </StackPanel>
+    </ScrollViewer>
+</Window>
